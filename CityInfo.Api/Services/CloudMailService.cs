@@ -2,7 +2,6 @@
 {
     public class CloudMailService(IConfiguration configuration) : IMailService
     {
-
         private readonly string _mailTo = configuration["mailSettings:mailToAddress"] ?? "default@mycompany.com";
         private readonly string _mailFrom = configuration["mailSettings:mailFromAddress"] ?? "default@mycompany.com";
 
