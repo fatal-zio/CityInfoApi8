@@ -1,9 +1,10 @@
 ﻿namespace CityInfo.Api.Services
 {
-    public class CloudMailService : IMailService
+    public class CloudMailService(IConfiguration configuration) : IMailService
     {
-        private string _mailTo = "admin@mycompany.com";
-        private string _mailFrom = "noreply@mycompany.com";
+
+        private readonly string _mailTo = configuration["mailSettings:mailToAddress"] ?? "default@mycompany.com";
+        private readonly string _mailFrom = configuration["mailSettings:mailFromAddress"] ?? "default@mycompany.com";
 
         public void Send(string subject, string message)
         {
