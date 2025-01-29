@@ -8,11 +8,11 @@ namespace CityInfo.Api.DbContexts
         public DbSet<City> Cities { get; set; }
         public DbSet<PointOfInterest> PointsOfInterest { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite("connectionstring");
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("DataSource=CityInfo.db");
 
-        //    base.OnConfiguring(optionsBuilder);
-        //}
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }
