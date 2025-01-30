@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CityInfo.Api.DbContexts
 {
-    public class CityInfoContext : DbContext
+    public class CityInfoContext(DbContextOptions<CityInfoContext> options) : DbContext(options)
     {
         public DbSet<City> Cities { get; set; }
         public DbSet<PointOfInterest> PointsOfInterest { get; set; }
@@ -73,11 +73,11 @@ namespace CityInfo.Api.DbContexts
             base.OnModelCreating(modelBuilder);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlite("DataSource=CityInfo.db");
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite(_connectionString);
 
-            base.OnConfiguring(optionsBuilder);
-        }
+        //    base.OnConfiguring(optionsBuilder);
+        //}
     }
 }
