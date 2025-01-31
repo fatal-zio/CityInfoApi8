@@ -41,9 +41,15 @@ namespace CityInfo.Api.Services
                 .Where(p => p.CityId == cityId && p.Id == pointOfInterestId).FirstOrDefaultAsync();
         }
 
-        public Task<IEnumerable<PointOfInterest>> GetPointOfInterestForCityAsync(int cityId, bool includePointsOfInterest)
+        public async Task AddPointOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest)
         {
-            throw new NotImplementedException();
+            var city = await GetCityAsync(cityId, false);
+            city?.PointsOfInterest.Add(pointOfInterest);
+        }
+
+        public async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() >= 0;
         }
     }
 }

@@ -59,34 +59,28 @@ namespace CityInfo.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PointOfInterestDto> CreatePointOfInterest(int cityId, PointOfInterestForCreationDto pointOfInterest)
+        public async Task<ActionResult<PointOfInterestDto>> CreatePointOfInterest(int cityId, PointOfInterestForCreationDto pointOfInterest)
         {
-            //var city = _citiesDataStore.Cities.FirstOrDefault(c => c.Id == cityId);
+            if (!await _cityInfoRepository.CityExistsAsync(cityId))
+            {
+                return NotFound();
+            }
 
-            //if (city == null)
-            //{
-            //    return NotFound();
-            //}
+            var finalPointOfInterest = _mapper.Map<Entities.PointOfInterest>(pointOfInterest);
 
-            ////for demo purposes
-            //var maxPointOfInterestId = _citiesDataStore.Cities.SelectMany(c => c.PointsOfInterest).Max(p => p.Id);
+            await _cityInfoRepository.AddPointOfInterestForCityAsync(cityId, finalPointOfInterest);
 
-            //var finalPointOfInterest = new PointOfInterestDto()
-            //{
-            //    Id = ++maxPointOfInterestId,
-            //    Name = pointOfInterest.Name,
-            //    Description = pointOfInterest.Description,
-            //};
+            await _cityInfoRepository.SaveChangesAsync();
 
-            //city.PointsOfInterest.Add(finalPointOfInterest);
+            var createdPointOfInterestToReturn = _mapper.Map<Models.PointOfInterestDto>(finalPointOfInterest);
 
-            //return CreatedAtRoute("GetPointOfInterest", new
-            //{
-            //    cityId,
-            //    pointOfInterestId = finalPointOfInterest.Id
-            //},
-            //finalPointOfInterest);
-            return Ok();
+            return CreatedAtRoute("GetPointOfInterest", 
+                new
+                {
+                    cityId,
+                    pointOfInterestId = createdPointOfInterestToReturn.Id
+                },
+                createdPointOfInterestToReturn);
         }
 
         [HttpPut("{pointOfInterestId}")]
