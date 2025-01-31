@@ -156,10 +156,12 @@ namespace CityInfo.Api.Controllers
                 return NotFound();
             }
 
-            //city.PointsOfInterest.Remove(existingPointOfInterest);
+            _cityInfoRepository.DeletePointOfInterest(pointOfInterestEntity);
 
-            //_mailService.Send("Point of interest deleted.",
-            //    $"Point of interest: {existingPointOfInterest.Name} with id: {existingPointOfInterest.Id} was deleted.");
+            await _cityInfoRepository.SaveChangesAsync();
+
+            _mailService.Send("Point of interest deleted.",
+                $"Point of interest: {pointOfInterestEntity.Name} with id: {pointOfInterestEntity.Id} was deleted.");
 
             return NoContent();
         }
