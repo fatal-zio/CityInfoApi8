@@ -397,3 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /CityInfo.Api/CityInfo.db
+/CityInfo.Api/CityInfo.db-wal
+CityInfo.Api/CityInfo.db-shm
