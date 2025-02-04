@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,7 +9,7 @@ namespace CityInfo.Api.Controllers
     [ApiController]
     public class AuthenticationController(IConfiguration configuration) : ControllerBase
     {
-        IConfiguration _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        readonly IConfiguration _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 
         public class AuthenticationRequestBody
         {
@@ -28,7 +27,7 @@ namespace CityInfo.Api.Controllers
                 return Unauthorized();
             }
 
-            var securityKey = new SymmetricSecurityKey(Convert.FromBase64String(_configuration["Authentication:SecretForKey"]));
+            var securityKey = new SymmetricSecurityKey(Convert.FromBase64String(_configuration["Authentication:SecretForKey"] ?? ""));
 
             var signingCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
