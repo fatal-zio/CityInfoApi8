@@ -51,11 +51,11 @@ namespace CityInfo.Api.Controllers
                 .WriteToken(jwtSecurityToken));
         }
 
-        private CityInfoUser ValidateUserCredentials(string? userName, string? password)
+        private static CityInfoUser ValidateUserCredentials(string? userName, string? password)
         {
             // obviously in a real application, the credentials would be checked here.
             return new CityInfoUser(
-                1, userName ?? "", "Jayme", "Desrosiers", "Winnipeg");
+                1, userName ?? "", "Jayme", "Desrosiers", "New York City");
         }
 
         private class CityInfoUser(int userId, string userName, string firstName, string lastName, string city)
