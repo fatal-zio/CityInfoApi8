@@ -1,4 +1,5 @@
 using CityInfo.Api;
+using Asp.Versioning;
 using CityInfo.Api.DbContexts;
 using CityInfo.Api.Services;
 using Microsoft.AspNetCore.StaticFiles;
@@ -75,6 +76,13 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("city", "New York City");
     });
 });
+
+builder.Services.AddApiVersioning(setupAction =>
+{
+    setupAction.ReportApiVersions = true;
+    setupAction.AssumeDefaultVersionWhenUnspecified = true;
+    setupAction.DefaultApiVersion = new ApiVersion(1, 0);
+}).AddMvc();
 
 var app = builder.Build();
 
