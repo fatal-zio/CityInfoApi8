@@ -1,0 +1,30 @@
+# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@schema=https
+@hostname=localhost
+@port=7217
+
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkpheW1lIiwiZmFtaWx5X25hbWUiOiJEZXNyb3NpZXJzIiwiY2l0eSI6Ik5ldyBZb3JrIENpdHkiLCJuYmYiOjE3Mzg4NzQyMzIsImV4cCI6MTczODg3NzgzMiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIxNyIsImF1ZCI6ImNpdHlpbmZvYXBpIn0.7roHf4RfozVmKeDzS9rDBq7BWAn8kk8HVMJ2yeYv5Rs
+
+###
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Accept:application/xml
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Test POI",
+    "description": "A Test POI for New York City."
+}
+
+###
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type: application/json
+
+{
+    "username": "blah",
+    "password": "nonsense"
+}
