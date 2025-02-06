@@ -4,7 +4,6 @@
 @port=7217
 
 GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZ2l2ZW5fbmFtZSI6IkpheW1lIiwiZmFtaWx5X25hbWUiOiJEZXNyb3NpZXJzIiwiY2l0eSI6Ik5ldyBZb3JrIENpdHkiLCJuYmYiOjE3Mzg4NzQyMzIsImV4cCI6MTczODg3NzgzMiwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzIxNyIsImF1ZCI6ImNpdHlpbmZvYXBpIn0.7roHf4RfozVmKeDzS9rDBq7BWAn8kk8HVMJ2yeYv5Rs
 
 ###
 GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
