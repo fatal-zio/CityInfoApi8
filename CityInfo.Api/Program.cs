@@ -1,4 +1,3 @@
-using CityInfo.Api;
 using Asp.Versioning;
 using CityInfo.Api.DbContexts;
 using CityInfo.Api.Services;
