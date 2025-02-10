@@ -8,6 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CityInfo.Api.Controllers
 {
+    /// <summary>
+    /// Provides CRUD functionality for Points of Interest
+    /// </summary>
+    /// <param name="logger">An implementation of ILogger</param>
+    /// <param name="mailService">An implementation of IMailService</param>
+    /// <param name="cityInfoRepository">City Info Repository</param>
+    /// <param name="mapper">Instance of IMapper for AutoMapper</param>
     [Route("api/v{version:apiVersion}/cities/{cityId}/pointsofinterest")]
     [Authorize(Policy = "MustBeFromNewYork")]
     [ApiController]
@@ -26,6 +33,15 @@ namespace CityInfo.Api.Controllers
 
         private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
+        /// <summary>
+        /// Returns a list of Points of Interest for a City
+        /// </summary>
+        /// <param name="cityId">Integer Id for a given city</param>
+        /// <returns>A collection of Points of Interest for a City</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PointOfInterestDto>>> GetPointsOfInterest(int cityId)
         {
@@ -55,6 +71,15 @@ namespace CityInfo.Api.Controllers
             }
         }
 
+        /// <summary>
+        /// Get a single Point of Interest
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <param name="pointOfInterestId"></param>
+        /// <returns>A Point of Interest</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet("{pointOfInterestId}", Name = "GetPointOfInterest")]
         public async Task<ActionResult<PointOfInterestDto>> GetPointOfInterest(int cityId, int pointOfInterestId)
         {
@@ -69,6 +94,15 @@ namespace CityInfo.Api.Controllers
                 Ok(_mapper.Map<PointOfInterestDto>(pointOfInterestEntity));
         }
 
+        /// <summary>
+        /// Create a new Point of Interest for a City
+        /// </summary>
+        /// <param name="cityId">Id of a City</param>
+        /// <param name="pointOfInterest">A new Point of Interest</param>
+        /// <returns>A newly created Point of Interest, complete with new Id</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult<PointOfInterestDto>> CreatePointOfInterest(int cityId, PointOfInterestForCreationDto pointOfInterest)
         {
@@ -94,6 +128,16 @@ namespace CityInfo.Api.Controllers
                 createdPointOfInterestToReturn);
         }
 
+        /// <summary>
+        /// Updates a Point of Interest by replacing the existing one
+        /// </summary>
+        /// <param name="cityId">Id of a City</param>
+        /// <param name="pointOfInterestId">Id for a Point of Interest</param>
+        /// <param name="pointOfInterest">A new version of the given Point of Interest</param>
+        /// <returns>No Content</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPut("{pointOfInterestId}")]
         public async Task<ActionResult> UpdatePointOfInterest(int cityId, int pointOfInterestId, PointOfInterestForUpdateDto pointOfInterest)
         {
@@ -116,6 +160,16 @@ namespace CityInfo.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Update a Point of Interest using a JSON Patch Document
+        /// </summary>
+        /// <param name="cityId">Id of a City</param>
+        /// <param name="pointOfInterestId">Id for a Point of Interest</param>
+        /// <param name="patchDocument">JSON Patch Document to apply to a given Point of Interest</param>
+        /// <returns>No Content</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpPatch("{pointOfInterestId}")]
         public async Task<ActionResult> PartiallyUpdatePointOfInterest(int cityId, int pointOfInterestId, JsonPatchDocument<PointOfInterestForUpdateDto> patchDocument)
         {
@@ -152,6 +206,15 @@ namespace CityInfo.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes a Point of Interest for a City
+        /// </summary>
+        /// <param name="cityId">Id of the City</param>
+        /// <param name="pointOfInterestId">Id of the Point of interest</param>
+        /// <returns>No Content</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [HttpDelete("{pointOfInterestId}")]
         public async Task<ActionResult> DeletePointOfInterest(int cityId, int pointOfInterestId)
         {

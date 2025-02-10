@@ -8,6 +8,11 @@ using System.Text.Json;
 
 namespace CityInfo.Api.Controllers
 {
+    /// <summary>
+    /// Controller for returning City information
+    /// </summary>
+    /// <param name="cityInfoRepository">Repository for IO actions</param>
+    /// <param name="mapper">IMapper for use of AutoMapper</param>
     [ApiController]
     [Authorize]
     [Route("api/v{version:apiVersion}/cities")]
@@ -22,6 +27,14 @@ namespace CityInfo.Api.Controllers
 
         const int maxCitiesPageSize = 20;
 
+        /// <summary>
+        /// Get a list of Cities matching the passed criteria
+        /// </summary>
+        /// <param name="name">Exact match City Name</param>
+        /// <param name="searchQuery">Full text search which is applied to City Name and Description. Includes partial matches.</param>
+        /// <param name="pageNumber">Page number (default 1)</param>
+        /// <param name="pageSize">Page size (default 10, max 20)</param>
+        /// <returns>Returns a collection of cities matching the criteria without Points of Interest</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities(string? name, string? searchQuery, int pageNumber = 1, int pageSize = 10)
         {
